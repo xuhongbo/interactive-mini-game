@@ -32,9 +32,23 @@ function initGame() {
     
     // 准备卡牌数据 (8对，总共16张)
     const cardSymbols = [...symbols, ...symbols];
-    // 洗牌算法
+    
+    /**
+     * 洗牌算法（Fisher-Yates / Knuth 算法）
+     * 这是一种高效的随机排序算法，时间复杂度为 O(n)
+     * 算法步骤:
+     * 1. 从数组最后一个元素开始向前遍历
+     * 2. 对于当前位置 i，生成一个随机位置 j (范围是 0 到 i)
+     * 3. 交换位置 i 和位置 j 的元素
+     * 4. 向前移动到下一个位置，重复步骤2和3，直到处理完所有元素
+     * 
+     * 这种方法确保每种排列组合的概率是相等的，产生了完全随机的结果
+     */
     for (let i = cardSymbols.length - 1; i > 0; i--) {
+        // 生成从 0 到 i 的随机索引
         const j = Math.floor(Math.random() * (i + 1));
+        
+        // 使用ES6的解构赋值语法交换元素，避免使用临时变量
         [cardSymbols[i], cardSymbols[j]] = [cardSymbols[j], cardSymbols[i]];
     }
     
